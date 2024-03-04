@@ -1,0 +1,40 @@
+parameters:
+    gsynchro.importPath: %kernel.project_dir%/ftp/import
+    gsynchro.importBackup: %kernel.project_dir%/ftp/import/.backup
+    gsynchro.exportPath: %kernel.project_dir%/ftp/export
+    gsynchro.exportBackup: %kernel.project_dir%/ftp/export/.backup
+    gsynchro.logsPath: %kernel.project_dir%/modules/griivsynchroengine/logs
+    gsynchro.batchSynchro: %kernel.project_dir%/modules/griivsynchroengine/bin/batchSynchro.php
+
+services:
+    _defaults:
+        public: true
+
+    #Commands
+    griiv.synchro.console.add.export.command:
+        class: Griiv\SynchroEngine\Command\AddExportCommand
+        tags: [ console.command ]
+
+    griiv.synchro.console.add.import.command:
+        class: Griiv\SynchroEngine\Command\AddImportCommand
+        tags: [ console.command ]
+
+    griiv.synchro.console.add.sequence.command:
+        class: Griiv\SynchroEngine\Command\AddSequenceCommand
+        tags: [ console.command ]
+
+    griiv.synchro.console.create.ftp.folders.command:
+        class: Griiv\SynchroEngine\Command\CreateFtpFoldersCommand
+        tags: [ console.command ]
+
+    griiv.synchro.console.execute.command:
+        class: Griiv\SynchroEngine\Command\ExecuteCommand
+        tags: [ console.command ]
+
+
+    #services
+
+    griiv.synchro.helpers.synchrohelper:
+        class: 'Griiv\SynchroEngine\Synchro\Helpers\SynchroHelper'
+        arguments:
+            - '@service_container'

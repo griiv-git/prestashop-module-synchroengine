@@ -1,0 +1,8 @@
+
+logs/*
+src/Synchro/Export/*
+!src/Synchro/Export/.gitkeep
+src/Synchro/Import/*
+!src/Synchro/Import/.gitkeep
+vendor
+.idea

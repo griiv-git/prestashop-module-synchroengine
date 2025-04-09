@@ -132,40 +132,39 @@ abstract class SequenceBase extends ExecutableBase
     {
         $this->flagAsRunning();
 
-        foreach ($this->syncs as $sync) {
-            try {
+        foreach ($this->syncs as $index => $sync) {
+            $arguments = array(
+                'class' => get_class($this),
+                'method' => 'subRun',
+                'globalParameters' => $this->getGlobalParameters(),
+                'currentRow' => $index,
+                'methodParameters' => array(get_class($sync), $sync->getGlobalParameters(), $sync->getThrowExceptionOnError()),
+                'module' => SynchroHelper::getModule(),
+            );
 
-                $arguments = array(
-                    'class' => get_class($this),
-                    'method' => 'subRun',
-                    'globalParameters' => $this->getGlobalParameters(),
-                    'methodParameters' => array(get_class($sync), $sync->getGlobalParameters(), $sync->getThrowExceptionOnError())
-                );
+            $process = $this->execSubprocess($this->getBatchPath(), $arguments);
 
-                $result = $this->execSubprocess($this->getBatchPath(), $arguments);
+            $processes[] = $process;
+        }
 
-                $resultStatus = $result['status'];
-                $resultData = $result['data'];
-                $resultError = $result['message'];
-            } catch (\Exception $e) {
-                $resultStatus = "PHP_ERROR";
-                $resultData = array();
-                $resultError = $e->getMessage();
-            }
-
-            if (in_array($resultStatus, array("PHP_ERROR", "BREAK"))) {
-                $this->flagAsNotRunning();
-                $this->lock($resultError);
-                if ($this->getThrowExceptionOnError()) {
-                    throw new BreakException(sprintf("Sequence %s is stopped. Any sequence executing this sequence might be locked.", get_class($this)));
+        while (count($processes) > 0) {
+            foreach ($processes as $key => $process) {
+                // Vérifier si le processus est terminé
+                if (!$process->isRunning()) {
+                    // Supprimer le processus de la liste des processus en cours
+                    unset($processes[$key]);
                 }
             }
-
-            if ($resultStatus != "OK") {
-                break;
-            }
+            // Attendre un court instant avant de vérifier à nouveau
+            usleep(10000); // 10 millisecondes
         }
+
         $this->flagAsNotRunning();
+    }
+
+    protected function chunkCallback($resultData)
+    {
+        $this->getLogger()->debug(var_export($resultData, true));
     }
 
     public function subRun($syncClassName, $syncGlobalParameters, $throwExceptionOnError)

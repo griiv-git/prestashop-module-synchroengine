@@ -31,6 +31,12 @@ class SynchroHelper
         return self::$container->getParameter('gsynchro.importPath');
     }
 
+    public static function getImportPathFixtures(): string
+    {
+        self::checkContainerIsOk();
+        return self::$container->getParameter('gsynchro.importPathFixtures');
+    }
+
     public static function getImportBackupPath():string
     {
         self::checkContainerIsOk();
@@ -139,6 +145,12 @@ class SynchroHelper
 
             return $text;
         }
+    }
+
+    public static function getLockDirectory()
+    {
+        self::checkContainerIsOk();
+        return self::$container->getParameter('gsynchro.lockPath');
     }
 
 }

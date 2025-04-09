@@ -124,7 +124,7 @@ abstract class SynchroBase extends ExecutableBase
             $this->setCurrentDatasourceName($dataSource->getEvaluatedName());
 
             $this->currentRow = $dataSource->getStartRow();
-
+            $processes = [];
             //On lance tout les process
             do {
                 $lines = $dataSource->getChunkedCollection($this->currentRow, $this->chunkSize);
@@ -138,6 +138,7 @@ abstract class SynchroBase extends ExecutableBase
                         'currentRow' => $this->currentRow,
                         'chunkSize' => $this->chunkSize,
                         'logger' => $this->getLogger(),
+                        'moduleName' => $this->moduleName,
                     );
 
                     $process = $this->execSubprocess($this->getBatchPath(), $arguments);
@@ -171,6 +172,7 @@ abstract class SynchroBase extends ExecutableBase
 
         if (!in_array($resultStatus, ['OK', 'END', 'BREAK'])) {
             $this->getLogger()->error($resultData['message']);
+            $this->getLogger()->info($resultData['stack']);
         }
 
         if (in_array($resultStatus, ['PHP_ERROR', 'BREAK'])) {
@@ -224,11 +226,11 @@ abstract class SynchroBase extends ExecutableBase
                     }
                 }*/
             } catch(BreakException $e) {
-                $this->getLogger()->critical($e->getMessage(), ['code' => $e->getCode(), 'row' => $key, 'datasource' => $datasourcename]);
+                $this->getLogger()->critical($e->getMessage() .  ' => ' . $e->getTraceAsString(), ['code' => $e->getCode(), 'row' => $key, 'datasource' => $datasourcename]);
 
                 throw $e;
             } catch(\Exception $e) {
-                $this->getLogger()->alert($e->getMessage(), ['code' => $e->getCode(), 'row' => $key, 'datasource' => $datasourcename]);
+                $this->getLogger()->alert($e->getMessage() . ' => ' . $e->getTraceAsString(), ['code' => $e->getCode(), 'row' => $key, 'datasource' => $datasourcename]);
             }
         }
         $this->getLogger()->info("END " . __METHOD__);

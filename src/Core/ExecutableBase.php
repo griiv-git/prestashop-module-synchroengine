@@ -105,8 +105,7 @@ abstract class ExecutableBase
 
     public function execute()
     {
-        try
-        {
+        try {
             // Initialize synchro (main process)
             $this->_init();
 
@@ -125,8 +124,7 @@ abstract class ExecutableBase
             // Shutdown (main process)
             $this->_shutdown();
 
-        }
-        catch(\Exception $e) {
+        } catch(\Exception $e) {
             $this->getLogger()->alert($e->getMessage() . "\n" . $e->getTraceAsString());
             $this->getLogger()->info(get_class($this) . " END WITH ERROR");
             $this->_shutdown();
@@ -171,8 +169,8 @@ abstract class ExecutableBase
         $tmpFilePath = tempnam('/tmp', 'gsynchro_');
         $phpBinaryPath = (new PhpExecutableFinder())->find();
         file_put_contents($tmpFilePath, serialize([$arguments]), 3);
-
         $cmd = $phpBinaryPath . ' ' . $batchPath . ' "' . $tmpFilePath . '"';
+
         $process = Process::fromShellCommandline($cmd);
         //$process = new Process($cmd);
 

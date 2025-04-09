@@ -10,6 +10,8 @@
 
 namespace Griiv\SynchroEngine\Synchro\Csv;
 
+use Griiv\SynchroEngine\Synchro\Helpers\EncodingConverter;
+
 abstract class FileAccessor
 {
     protected string $fileName;
@@ -69,11 +71,11 @@ abstract class FileAccessor
     protected function registerEncodingFilter()
     {
         if ($this->useEncodingFilter()) {
-            /*zsynchro_EncodingConverter::setInputEncoding($this->fromEncoding);
-            zsynchro_EncodingConverter::setOutputEncoding($this->toEncoding);
+            EncodingConverter::setInputEncoding($this->fromEncoding);
+            EncodingConverter::setOutputEncoding($this->toEncoding);
 
-            stream_filter_register("zsynchro_convert_encoding", "zsynchro_EncodingConverter");
-            stream_filter_prepend($this->handler, "zsynchro_convert_encoding");*/
+            stream_filter_register("synchro_convert_encoding", "Griiv\\SynchroEngine\\Synchro\\Helpers\\EncodingConverter");
+            stream_filter_prepend($this->handler, "synchro_convert_encoding");
         }
     }
 

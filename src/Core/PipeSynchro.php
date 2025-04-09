@@ -17,6 +17,8 @@ abstract class PipeSynchro extends SynchroBase
 {
     protected int $chunkSize = 1000;
 
+    protected int $maxParallelProcesses = 5;
+
     /**
      * @var array<DataTargetInterface>
      */
@@ -90,22 +92,10 @@ abstract class PipeSynchro extends SynchroBase
     protected function _processRow($dataArray)
     {
         $targetData = $this->processRow($dataArray);
-        if($targetData !== null)
-        {
+        if($targetData !== null) {
             $item = new Item\Item($targetData, $this->getTargetItemDefinition(), true);
-            if ($item->isValid())
-            {
-                foreach($this->getDataTargets() as $dataTarget)
-                {
-                    $dataTarget->addItems(array($item->getDataArray()));
-                }
-            }
-            else
-            {
-                foreach($item->getErrorStrings() as $errorString)
-                {
-                    $this->getLogger()->error($errorString, 0);
-                }
+            foreach($this->getDataTargets() as $dataTarget) {
+                $dataTarget->addItems(array($item->getDataArray()));
             }
         }
     }

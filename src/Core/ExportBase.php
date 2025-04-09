@@ -11,6 +11,7 @@
 namespace Griiv\SynchroEngine\Synchro;
 
 
-abstract class ImportBase extends SynchroBase
+abstract class ExportBase extends PipeSynchro
 {
+    protected $moduleName = 'griivsynchroengine';
 }

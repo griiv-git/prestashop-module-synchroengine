@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  **/
 
-namespace Griiv\SynchroEngine\Synchro\DataTarget;
+namespace Griiv\SynchroEngine\Core\DataTarget;
 
 interface DataTargetInterface
 {

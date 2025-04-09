@@ -8,12 +8,12 @@
  * file that was distributed with this source code.
  **/
 
-namespace Griiv\SynchroEngine\Synchro;
+namespace Griiv\SynchroEngine\Core;
 
 
-use Griiv\SynchroEngine\Exception\BreakException;
-use Griiv\SynchroEngine\Synchro\Helpers\SynchroHelper;
 use Exception;
+use Griiv\SynchroEngine\Core\Helpers\SynchroHelper;
+use Griiv\SynchroEngine\Exception\BreakException;
 use Symfony\Component\Filesystem\Filesystem;
 
 abstract class SequenceBase extends ExecutableBase

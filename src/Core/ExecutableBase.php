@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  **/
 
-namespace Griiv\SynchroEngine\Synchro;
+namespace Griiv\SynchroEngine\Core;
 
 
 use PrestaShop\PrestaShop\Core\Util\DateTime\DateTime;

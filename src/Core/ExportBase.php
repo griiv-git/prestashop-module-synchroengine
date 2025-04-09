@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  **/
 
-namespace Griiv\SynchroEngine\Synchro;
+namespace Griiv\SynchroEngine\Core;
 
 
 abstract class ExportBase extends PipeSynchro

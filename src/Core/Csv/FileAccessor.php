@@ -8,9 +8,9 @@
  * file that was distributed with this source code.
  **/
 
-namespace Griiv\SynchroEngine\Synchro\Csv;
+namespace Griiv\SynchroEngine\Core\Csv;
 
-use Griiv\SynchroEngine\Synchro\Helpers\EncodingConverter;
+use Griiv\SynchroEngine\Core\Helpers\EncodingConverter;
 
 abstract class FileAccessor
 {

@@ -8,9 +8,9 @@
  * file that was distributed with this source code.
  **/
 
-namespace Griiv\SynchroEngine\Synchro\DataSource;
+namespace Griiv\SynchroEngine\Core\DataSource;
 
-use Griiv\SynchroEngine\Synchro\Csv\CsvFileReader;
+use Griiv\SynchroEngine\Core\Csv\CsvFileReader;
 
 class FileDataSource extends AbstractDataSource
 {

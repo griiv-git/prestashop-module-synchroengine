@@ -10,6 +10,8 @@
 
 namespace Griiv\SynchroEngine\Command;
 
+ini_set('memory_limit', '-1');
+
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -45,6 +47,7 @@ final class ExecuteCommand extends Command
         $this
             ->setName('gsynchro:execute')
             ->setDescription('Run an import, export or sequence')
+            ->addArgument('module_name', InputArgument::REQUIRED, 'Module to where is the class')
             ->addArgument('class_name', InputArgument::REQUIRED, 'Executable class to run')
             ->setHelp('Help test');
     }
@@ -57,21 +60,29 @@ final class ExecuteCommand extends Command
 
         $this->io = new SymfonyStyle($input, $output);
         $classNameToExecute = $input->getArgument('class_name');
+        $module = $input->getArgument('module_name');
 
-        //use Griiv\SynchroEngine\Synchro\Import\CustomerImport;
         $type = $this->getTypeExecutable($classNameToExecute);
-        $namespace = "Griiv\\SynchroEngine\\Synchro\\" . $type . "\\";
 
-        $fullClassName = $namespace . $classNameToExecute;
+        if (file_exists('modules/' . $module . '/src/Synchro/'.$type.'/' . $classNameToExecute . '.php')) {
+            //get namespace in the file class
+            $namespace = $this->getNamespaceFromFile('modules/' . $module . '/src/Synchro/'.$type.'/' . $classNameToExecute . '.php');
 
-        if (class_exists($fullClassName)) {
-            $this->io->success('Running executable class ' . $fullClassName);
-            $executable = new $fullClassName();
+            $fullClassName = $namespace . "\\" .  $classNameToExecute;
 
-            $executable->execute();
+            if (class_exists($fullClassName)) {
+                $this->io->success('Running executable class ' . $fullClassName);
+                $executable = new $fullClassName();
+
+                $executable->execute();
+
+            } else {
+                $this->io->warning('class ' . $classNameToExecute . ' not exist');
+            }
+
 
         } else {
-            $this->io->warning('class ' . $classNameToExecute . ' not exist');
+            $this->io->warning('File not exist');
         }
 
 
@@ -91,5 +102,21 @@ final class ExecuteCommand extends Command
         if (strpos($className, 'Sequence')) {
             return 'Sequence';
         }
+    }
+
+    private function getNamespaceFromFile($filePath) {
+        // Lire le contenu du fichier
+        $fileContent = file_get_contents($filePath);
+        if ($fileContent === false) {
+            return null;
+        }
+
+        // Utiliser une expression régulière pour trouver le namespace
+        $namespacePattern = '/namespace\s+([a-zA-Z0-9_\\\\]+)\s*;/';
+        if (preg_match($namespacePattern, $fileContent, $matches)) {
+            return $matches[1];
+        }
+
+        return null;
     }
 }

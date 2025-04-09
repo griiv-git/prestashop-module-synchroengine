@@ -11,13 +11,11 @@
 namespace Griiv\SynchroEngine\Command;
 
 
-use Griiv\SynchroEngine\Synchro\Helpers\SynchroHelper;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Process\Process;
 
 final class CreateFtpFoldersCommand extends ContainerAwareCommand
 {
@@ -92,10 +90,10 @@ final class CreateFtpFoldersCommand extends ContainerAwareCommand
         $this->io = new SymfonyStyle($input, $output);
 
         $configFoldersToCreate = [
-            'griivsynchroengine.importPath',
-            'griivsynchroengine.importBackup',
-            'griivsynchroengine.exportPath',
-            'griivsynchroengine.exportBackup'
+            'gsynchro.importPath',
+            'gsynchro.importBackup',
+            'gsynchro.exportPath',
+            'gsynchro.exportBackup'
         ];
         $foldersToCreate = [];
 

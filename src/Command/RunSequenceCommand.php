@@ -23,7 +23,7 @@ final class RunSequenceCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setName('gsynchro:create-ftp-folders')
+            ->setName('gsynchro:run-sequence')
             ->setDescription('Generate the .htaccess file');
     }
 

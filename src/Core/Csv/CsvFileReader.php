@@ -8,9 +8,10 @@
  * file that was distributed with this source code.
  **/
 
-namespace Griiv\SynchroEngine\Synchro\Csv;
+namespace Griiv\SynchroEngine\Core\Csv;
 
 
+use Griiv\SynchroEngine\Synchro\Csv\Array;
 use Symfony\Component\Filesystem\Exception\IOException;
 
 class CsvFileReader extends CsvFileAccessor

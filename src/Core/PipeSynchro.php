@@ -8,10 +8,11 @@
  * file that was distributed with this source code.
  **/
 
-namespace Griiv\SynchroEngine\Synchro;
+namespace Griiv\SynchroEngine\Core;
 
-use Griiv\SynchroEngine\Synchro\DataTarget\DataTargetInterface;
-use Griiv\SynchroEngine\Synchro\Item\ItemDefinition;
+use Griiv\SynchroEngine\Core\DataTarget\DataTargetInterface;
+use Griiv\SynchroEngine\Core\Item\ItemDefinition;
+use Griiv\SynchroEngine\Core\Item;
 
 abstract class PipeSynchro extends SynchroBase
 {
@@ -93,7 +94,7 @@ abstract class PipeSynchro extends SynchroBase
     {
         $targetData = $this->processRow($dataArray);
         if($targetData !== null) {
-            $item = new Item\Item($targetData, $this->getTargetItemDefinition(), true);
+            $item = new \Griiv\SynchroEngine\Core\Item\Item($targetData, $this->getTargetItemDefinition(), true);
             foreach($this->getDataTargets() as $dataTarget) {
                 $dataTarget->addItems(array($item->getDataArray()));
             }

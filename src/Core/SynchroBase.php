@@ -8,13 +8,14 @@
  * file that was distributed with this source code.
  **/
 
-namespace Griiv\SynchroEngine\Synchro;
+namespace Griiv\SynchroEngine\Core;
 
+use Griiv\SynchroEngine\Core\DataSource\AbstractDataSource;
+use Griiv\SynchroEngine\Core\DataSource\DataSourceInterface;
+use Griiv\SynchroEngine\Core\Helpers\SynchroHelper;
+use Griiv\SynchroEngine\Core\Item\ItemDefinition;
 use Griiv\SynchroEngine\Exception\BreakException;
-use Griiv\SynchroEngine\Synchro\DataSource\AbstractDataSource;
-use Griiv\SynchroEngine\Synchro\DataSource\DataSourceInterface;
-use Griiv\SynchroEngine\Synchro\Helpers\SynchroHelper;
-use Griiv\SynchroEngine\Synchro\Item\ItemDefinition;
+use Griiv\SynchroEngine\Core\Item;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
@@ -214,7 +215,7 @@ abstract class SynchroBase extends ExecutableBase
 
         foreach ($data as $key => $row) {
             try {
-                $item = new Item\Item($row, $this->getItemDefinition());
+                $item = new \Griiv\SynchroEngine\Core\Item\Item($row, $this->getItemDefinition());
                 $this->_processRow($item->getDataArray());
 
                 /*if ($item->isValid()) {

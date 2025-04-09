@@ -8,10 +8,10 @@
  * file that was distributed with this source code.
  **/
 
-namespace Griiv\SynchroEngine\Synchro\DataTarget;
+namespace Griiv\SynchroEngine\Core\DataTarget;
 
-use Griiv\SynchroEngine\Synchro\Csv\CsvFileWriter;
 use ErrorException;
+use Griiv\SynchroEngine\Core\Csv\CsvFileWriter;
 
 class FileDataTarget extends AbstractDataTarget
 {

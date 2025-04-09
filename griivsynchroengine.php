@@ -18,7 +18,7 @@ class griivsynchroengine extends Module
     public function __construct()
     {
         $this->name = 'griivsynchroengine';
-        $this->version = '1.0.0';
+        $this->version = '1.1.0';
         $this->author = 'Griiv';
 
         parent::__construct();

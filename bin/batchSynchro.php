@@ -23,6 +23,12 @@ $arguments = $argv[0];
 
 $class = $arguments['class'];
 $method = $arguments['method'];
+$module = $arguments['moduleName'];
+
+if ($module) {
+    require_once _PS_MODULE_DIR_ . $module . '/vendor/autoload.php';
+}
+
 $globalParameters = isset($arguments['globalParameters']) ? $arguments['globalParameters'] : array();
 
 // Make method parameters array
@@ -40,7 +46,7 @@ if (is_null($class)) {
 } else {
     if (class_exists($class)) {
         $instance = new $class($globalParameters);
-        if ($instance !== null && $instance instanceof Griiv\SynchroEngine\Synchro\ExecutableBase) {
+        if ($instance !== null && $instance instanceof \Griiv\SynchroEngine\Core\ExecutableBase) {
 
             try {
                 $data = call_user_func_array(array($instance, $method), $methodParameters);
@@ -49,13 +55,15 @@ if (is_null($class)) {
             } catch(Griiv\SynchroEngine\Exception\BreakException $e) {
                 $status = STATUS_BREAK;
                 $message = $e->getMessage();
+                $stack = $e->getTraceAsString();
+
             }
         } else {
-            $message = addslashes($class) . " is not zsynchro_ExecutableBase";
+            $message = $class . " is not zsynchro_ExecutableBase";
             $status = STATUS_BREAK;
         }
     } else {
-        $message = addslashes($class) . " not exist";
+        $message = $class . " not exist";
         $status = STATUS_BREAK;
     }
 }
@@ -64,6 +72,7 @@ $result = [
     'status' => $status,
     'data' => $data,
     'message' => $message,
+    'stack' => $stack,
     'currentRow' => $arguments['currentRow']
 ];
 

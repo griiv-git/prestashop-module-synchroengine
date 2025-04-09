@@ -8,6 +8,8 @@
  * file that was distributed with this source code.
  **/
 
+use Griiv\Prestashop\Module\Installer\GriivInstaller;
+
 require_once __DIR__ . '/vendor/autoload.php';
 
 class griivsynchroengine extends Module
@@ -31,7 +33,8 @@ class griivsynchroengine extends Module
 
     public function install()
     {
-        return parent::install();
+        $installer = new GriivInstaller($this);
+        return parent::install() && $installer->install();
     }
 
     public function uninstall()
@@ -40,7 +43,7 @@ class griivsynchroengine extends Module
     }
 
     public static $kernel;
-    
+
     public static function getKernel()
     {
         // if the singleton doesn't exist
@@ -85,7 +88,7 @@ class griivsynchroengine extends Module
 
     public static function getTranslationDomain()
     {
-        return "Modules.Gsynchro.Module";
+        return "Modules.Griivsynchroengine.Griivsynchroengine";
     }
 
     public function hookActionFrontControllerSetMedia()

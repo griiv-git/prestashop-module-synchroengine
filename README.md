@@ -41,10 +41,11 @@ Le fichier suivant est crée : `_PS_ROOT_DIR_/modules/griivsynchroengine/src/Syn
 **Pensez à faire un `composer dumpautoload` dans votre module pour mettre à jour l'autoloading**
 
 Voici le contenu fichier crée :
+
 ```php
 namespace Griiv\SynchroEngine\Synchro\Import;
 
-use Griiv\SynchroEngine\Synchro\ImportBase;
+use Griiv\SynchroEngine\Core\ImportBase;
 
 class CustomersImport extends ImportBase
 {

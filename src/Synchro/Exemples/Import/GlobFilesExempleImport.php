@@ -10,13 +10,12 @@
 
 namespace Griiv\SynchroEngine\Synchro\Exemples\Import;
 
-use Griiv\SynchroEngine\Synchro\DataSource\GlobDataSource;
-use Griiv\SynchroEngine\Synchro\Helpers\SynchroHelper;
-use Griiv\SynchroEngine\Synchro\Helpers\DataSourceHelper;
-use Griiv\SynchroEngine\Synchro\ImportBase;
-use Griiv\SynchroEngine\Synchro\Item\ItemDefinition;
-use Griiv\SynchroEngine\Synchro\Item\ItemProperty;
 use FilesystemIterator;
+use Griiv\SynchroEngine\Core\DataSource\GlobDataSource;
+use Griiv\SynchroEngine\Core\Helpers\SynchroHelper;
+use Griiv\SynchroEngine\Core\ImportBase;
+use Griiv\SynchroEngine\Core\Item\ItemDefinition;
+use Griiv\SynchroEngine\Core\Item\ItemProperty;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;

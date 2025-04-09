@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  **/
 
-namespace Griiv\SynchroEngine\Synchro\Helpers;
+namespace Griiv\SynchroEngine\Core\Helpers;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 

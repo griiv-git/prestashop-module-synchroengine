@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  **/
 
-namespace Griiv\SynchroEngine\Synchro\Item;
+namespace Griiv\SynchroEngine\Core\Item;
 
 class ItemProperty
 {

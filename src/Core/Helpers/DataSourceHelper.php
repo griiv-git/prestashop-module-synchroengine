@@ -8,10 +8,10 @@
  * file that was distributed with this source code.
  **/
 
-namespace Griiv\SynchroEngine\Synchro\Helpers;
+namespace Griiv\SynchroEngine\Core\Helpers;
 
-use Griiv\SynchroEngine\Synchro\DataSource\DataSourceInterface;
-use Griiv\SynchroEngine\Synchro\DataSource\FileDataSource;
+use Griiv\SynchroEngine\Core\DataSource\DataSourceInterface;
+use Griiv\SynchroEngine\Core\DataSource\FileDataSource;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File;
 

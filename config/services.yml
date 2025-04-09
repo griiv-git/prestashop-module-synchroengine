@@ -1,10 +1,12 @@
 parameters:
-    gsynchro.importPath: %kernel.project_dir%/ftp/import
-    gsynchro.importBackup: %kernel.project_dir%/ftp/import/.backup
-    gsynchro.exportPath: %kernel.project_dir%/ftp/export
-    gsynchro.exportBackup: %kernel.project_dir%/ftp/export/.backup
-    gsynchro.logsPath: %kernel.project_dir%/modules/griivsynchroengine/logs
-    gsynchro.batchSynchro: %kernel.project_dir%/modules/griivsynchroengine/bin/batchSynchro.php
+    gsynchro.importPath: "%kernel.project_dir%/ftp/import"
+    gsynchro.importPathFixtures: "%kernel.project_dir%/modules/griivsynchroengine/fixtures/import"
+    gsynchro.importBackup: "%kernel.project_dir%/ftp/import/.backup"
+    gsynchro.exportPath: "%kernel.project_dir%/ftp/export"
+    gsynchro.exportBackup: "%kernel.project_dir%/ftp/export/.backup"
+    gsynchro.logsPath: "%kernel.project_dir%/modules/griivsynchroengine/logs"
+    gsynchro.batchSynchro: "%kernel.project_dir%/modules/griivsynchroengine/bin/batchSynchro.php"
+    gsynchro.lockPath: "%kernel.project_dir%/ftp/lock"
 
 services:
     _defaults:

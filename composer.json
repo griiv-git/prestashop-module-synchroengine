@@ -18,7 +18,7 @@
         }
     ],
     "require": {
-        "symfony/process": "5.0.*",
+        "symfony/process": "v5.0.*",
         "monolog/monolog": "1.27.1"
     }
 }

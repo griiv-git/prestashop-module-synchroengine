@@ -72,9 +72,9 @@ class SynchroHelper
 
     /**
      * Convert an array into a stdClass()
-     *
+     * 
      * @param   array   $array  The array we want to convert
-     *
+     * 
      * @return  object
      */
     public static function arrayToObject($array)
@@ -91,9 +91,9 @@ class SynchroHelper
 
     /**
      * Convert a object to an array
-     *
+     * 
      * @param   object  $object The object we want to convert
-     *
+     * 
      * @return  array
      */
     public static function objectToArray($object)
@@ -141,9 +141,14 @@ class SynchroHelper
         return self::getContainer()->getParameter('gsynchro.lockPath');
     }
 
-    public static function notificcationIsEnabled()
+    public static function notificcationEmailIsEnabled()
     {
-        return (bool)self::getContainer()->getParameter('gsynchro.enableNotification');
+        return (bool)self::getContainer()->getParameter('gsynchro.enableEmailNotification');
+    }
+
+    public static function notificationKchatIsEnabled()
+    {
+            return (bool)self::getContainer()->getParameter('gsynchro.enableKchatNotification');
     }
 
 }

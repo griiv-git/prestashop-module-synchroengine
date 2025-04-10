@@ -24,12 +24,12 @@ class Notification implements NotificationInterface
     public const IMPORTANCE_MEDIUM = 'medium';
     public const IMPORTANCE_LOW = 'low';
 
-    private $subject = '';
-    private $content = '';
-    private $emoji = '';
-    private $exception;
-    private $exceptionAsString = '';
-    private $importance = self::IMPORTANCE_HIGH;
+    protected $subject = '';
+    protected $content = '';
+    protected $emoji = '';
+    protected $exception;
+    protected $exceptionAsString = '';
+    protected $importance = self::IMPORTANCE_HIGH;
 
     public function __construct(string $subject = '')
     {
@@ -149,7 +149,7 @@ class Notification implements NotificationInterface
         }
     }
 
-    private function computeExceptionAsString(\Throwable $exception): string
+    public function computeExceptionAsString(\Throwable $exception): string
     {
         if (class_exists(FlattenException::class)) {
             $exception = $exception instanceof FlattenException ? $exception : FlattenException::createFromThrowable($exception);

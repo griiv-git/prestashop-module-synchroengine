@@ -18,12 +18,12 @@ class EmailNotification extends Notification
         $message = $this->createSwiftMessage($emailMessage, $recipient);
 
         $connection = (new Swift_SmtpTransport(
-            'mail.infomaniak.com',
-            465,
+            getenv('GRIIVSYNCHRO_SMTP_HOST'),
+            getenv('GRIIVSYNCHRO_SMTP_PORT'),
             'ssl',
         ))
-            ->setUsername('sonde@griiv.fr')
-            ->setPassword('Griiv67!');
+            ->setUsername(getenv('GRIIVSYNCHRO_SMTP_EMAIL'))
+            ->setPassword(getenv('GRIIVSYNCHRO_SMTP_PWD'));
 
         $swift = new Swift_Mailer($connection);
         $swift->send($message);

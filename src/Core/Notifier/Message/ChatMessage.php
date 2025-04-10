@@ -12,81 +12,46 @@
 namespace Griiv\SynchroEngine\Core\Notifier\Message;
 
 use Griiv\SynchroEngine\Core\Notifier\Notification\Notification;
-use Griiv\SynchroEngine\Core\Notifier\Recipient\Recipient;
+use Symfony\Component\Mime\RawMessage;
 
 final class ChatMessage implements MessageInterface
 {
-    private $transport;
-    private $subject;
-    private $options;
-    private $notification;
+    private $message;
 
-    public function __construct(string $subject, MessageOptionsInterface $options = null)
+    public function __construct(RawMessage $message, MessageOptionsInterface $options = null)
     {
-        $this->subject = $subject;
-        $this->options = $options;
+        $this->message = $message;
     }
 
-    public static function fromNotification(Notification $notification, Recipient $recipient, string $transport = null): self
+    public static function fromNotification(Notification $notification): self
     {
-        $message = new self($notification->getSubject());
-        $message->notification = $notification;
+        $message = (new RawMessage($notification->getContent()));
 
-        return $message;
+        return new self($message);
     }
 
-    /**
-     * @return $this
-     */
-    public function subject(string $subject): self
+    public function getMessage(): RawMessage
     {
-        $this->subject = $subject;
-
-        return $this;
-    }
-
-    public function getSubject(): string
-    {
-        return $this->subject;
+        return $this->message;
     }
 
     public function getRecipientId(): ?string
     {
-        return $this->options ? $this->options->getRecipientId() : null;
+        return null;
     }
 
-    /**
-     * @return $this
-     */
-    public function options(MessageOptionsInterface $options): self
+    public function getSubject(): string
     {
-        $this->options = $options;
-
-        return $this;
+        return '';
     }
 
     public function getOptions(): ?MessageOptionsInterface
     {
-        return $this->options;
-    }
-
-    /**
-     * @return $this
-     */
-    public function transport(string $transport): self
-    {
-        $this->transport = $transport;
-
-        return $this;
+        return null;
     }
 
     public function getTransport(): ?string
     {
-        return $this->transport;
-    }
-
-    public function getNotification(): ?Notification
-    {
-        return $this->notification;
+        return $this->message instanceof RawMessage ? $this->message->getHeaders()->getHeaderBody('X-Transport') : null;
     }
 }

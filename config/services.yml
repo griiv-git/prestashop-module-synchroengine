@@ -7,7 +7,8 @@ parameters:
     gsynchro.logsPath: "%kernel.project_dir%/modules/griivsynchroengine/logs"
     gsynchro.batchSynchro: "%kernel.project_dir%/modules/griivsynchroengine/bin/batchSynchro.php"
     gsynchro.lockPath: "%kernel.project_dir%/ftp/lock"
-    gsynchro.enableNotification: true
+    gsynchro.enableEmailNotification: false
+    gsynchro.enableKchatNotification: true
 
 services:
     _defaults:

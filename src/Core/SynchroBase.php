@@ -14,6 +14,7 @@ use Griiv\SynchroEngine\Core\DataSource\AbstractDataSource;
 use Griiv\SynchroEngine\Core\DataSource\DataSourceInterface;
 use Griiv\SynchroEngine\Core\Helpers\SynchroHelper;
 use Griiv\SynchroEngine\Core\Item\ItemDefinition;
+use Griiv\SynchroEngine\Core\Notifier\Notification\EmailNotification;
 use Griiv\SynchroEngine\Exception\BreakException;
 use Griiv\SynchroEngine\Core\Item;
 use Monolog\Handler\StreamHandler;
@@ -129,7 +130,6 @@ abstract class SynchroBase extends ExecutableBase
             //On lance tout les process
             do {
                 $lines = $dataSource->getChunkedCollection($this->currentRow, $this->chunkSize);
-
                 if (count($lines) > 0) {
                     $arguments = array(
                         'class' => get_class($this),
@@ -177,6 +177,37 @@ abstract class SynchroBase extends ExecutableBase
         }
 
         if (in_array($resultStatus, ['PHP_ERROR', 'BREAK'])) {
+            //log error in file
+            $this->getLogger()->critical(sprintf(
+                "Chunk process %s with PID %s (%s)is stopped",
+                get_class($this),
+                123,
+                $this->currentRow
+            ));
+
+            if (SynchroHelper::notificcationIsEnabled()) {
+                //Notify with email
+                $notif = EmailNotification::fromThrowable(new BreakException(
+                    sprintf(
+                        "Chunk process %s with PID %s (%s)is stopped",
+                        get_class($this),
+                        123,
+                        $this->currentRow
+                    )));
+
+                if (isset($resultData['message'])) {
+                    $notif->content($resultData['message'] . PHP_EOL . PHP_EOL . $notif->getContent());
+                }
+
+                $notif->importanceFromLogLevelName('critical');
+                $emails = getenv('GRIIVSYNCHRO_RECIPIENTS_NOTIF');
+
+                foreach (explode(',', $emails) as $email) {
+                    $notif->notify(new Notifier\Recipient\Recipient($email));
+                }
+            }
+
+            //Throw exception to stop synchro
             if ($this->getThrowExceptionOnError()) {
                 throw new BreakException(
                     sprintf(
@@ -186,12 +217,7 @@ abstract class SynchroBase extends ExecutableBase
                         $this->currentRow
                     ));
             }
-            $this->getLogger()->critical(sprintf(
-                "Chunk process %s with PID %s (%s)is stopped",
-                get_class($this),
-                123,
-                $this->currentRow
-            ));
+
             return;
         }
 

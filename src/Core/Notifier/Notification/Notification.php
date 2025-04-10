@@ -2,7 +2,6 @@
 
 namespace Griiv\SynchroEngine\Core\Notifier\Notification;
 
-use Griiv\SynchroEngine\Core\Notifier\Notifier\Message\MessageInterface;
 use Psr\Log\LogLevel;
 use Symfony\Component\ErrorHandler\Exception\FlattenException;
 use Griiv\SynchroEngine\Core\Notifier\Recipient\Recipient;

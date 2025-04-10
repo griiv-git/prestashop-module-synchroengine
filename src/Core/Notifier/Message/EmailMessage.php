@@ -2,8 +2,6 @@
 
 namespace Griiv\SynchroEngine\Core\Notifier\Message;
 
-
-use Symfony\Bridge\Twig\Mime\NotificationEmail;
 use Symfony\Component\Mailer\Envelope;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Mime\RawMessage;

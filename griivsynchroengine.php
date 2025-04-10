@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  **/
 
-use Griiv\Prestashop\Module\Installer\GriivInstaller;
+use Symfony\Component\Dotenv\Dotenv;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
@@ -29,11 +29,13 @@ class griivsynchroengine extends Module
             'min' => '1.7.5.0',
             'max' => _PS_VERSION_,
         ];
+
+        $this->loadEnv();
     }
 
     public function install()
     {
-        $installer = new GriivInstaller($this);
+        $installer = new Griiv\SynchroEngine\Install\Installer($this);
         return parent::install() && $installer->install();
     }
 
@@ -91,31 +93,9 @@ class griivsynchroengine extends Module
         return "Modules.Griivsynchroengine.Griivsynchroengine";
     }
 
-    public function hookActionFrontControllerSetMedia()
+    private function loadEnv(): void
     {
-        if ($this->context->controller instanceof ProductControllerCore) {
-
-            $idProduct = (int)Tools::getValue('id_product');
-            $product = new Product($idProduct);
-            Media::addJsDef(['productHasCombinations' => $product->hasCombinations()]);
-            $this->context->controller->registerJavascript(
-                'modules-griivsynchroengine-product',
-                'modules/' . $this->name . '/views/js/product.js',
-                [
-                    'position' => 'bottom',
-                    'priority' => 150,
-                    'attributes' => ['defer' => 'defer'],
-                ]
-            );
-            $this->context->controller->registerStylesheet(
-                'modules-griivsynchroengine-product',
-                'modules/' . $this->name . '/views/css/product.css',
-                [
-                    'media' => 'all',
-                    'priority' => 150,
-                ]
-            );
-        }
+        $dotenv = new Dotenv(true);
+        $dotenv->loadEnv(__DIR__ . '/.env');
     }
-
 }

@@ -3,13 +3,18 @@
     "description": "Set of command and codes to create imports and exports",
     "type": "prestashop-module",
     "config": {
-      "preferred-install": "dist"
+        "preferred-install": "dist",
+        "optimize-autoloader": true,
+        "prepend-autoloader": false
     },
     "autoload": {
+        "files": [
+            "bootstrap.php"
+        ],
         "psr-4": {
             "Griiv\\SynchroEngine\\": "src/"
         },
-      "classmap": ["griivsynchroengine.php"]
+        "classmap": ["griivsynchroengine.php"]
     },
     "authors": [
         {

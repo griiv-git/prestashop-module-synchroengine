@@ -3,7 +3,6 @@
 namespace Griiv\SynchroEngine\Core\Notifier;
 
 use Griiv\SynchroEngine\Core\Notifier\Recipient\NoRecipient;
-use Psr\Container\ContainerInterface;
 use Griiv\SynchroEngine\Core\Notifier\Notification\Notification;
 use Griiv\SynchroEngine\Core\Notifier\Recipient\Recipient;
 

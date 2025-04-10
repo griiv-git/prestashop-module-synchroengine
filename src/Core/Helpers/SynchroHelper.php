@@ -19,53 +19,40 @@ class SynchroHelper
      */
     static $container;
 
+
     public static function getBatchPath()
     {
-        self::checkContainerIsOk();
-        return self::$container->getParameter('gsynchro.batchSynchro');
+        return self::getContainer()->getParameter('gsynchro.batchSynchro');
     }
 
     public static function getImportPath(): string
     {
-        self::checkContainerIsOk();
-        return self::$container->getParameter('gsynchro.importPath');
+        return self::getContainer()->getParameter('gsynchro.importPath');
     }
 
     public static function getImportPathFixtures(): string
     {
-        self::checkContainerIsOk();
-        return self::$container->getParameter('gsynchro.importPathFixtures');
+        return self::getContainer()->getParameter('gsynchro.importPathFixtures');
     }
 
     public static function getImportBackupPath():string
     {
-        self::checkContainerIsOk();
-        return self::$container->getParameter('gsynchro.importBackup');
+        return self::getContainer()->getParameter('gsynchro.importBackup');
     }
 
     public static function getExportPath(): string
     {
-        self::checkContainerIsOk();
-        return self::$container->getParameter('gsynchro.exportPath');
+        return self::getContainer()->getParameter('gsynchro.exportPath');
     }
 
     public static function getExportBackupPath(): string
     {
-        self::checkContainerIsOk();
-        return self::$container->getParameter('gsynchro.exportBackup');
+        return self::getContainer()->getParameter('gsynchro.exportBackup');
     }
 
     public static function getLogsPath(): string
     {
-        self::checkContainerIsOk();
-        return self::$container->getParameter('gsynchro.logsPath');
-    }
-
-    public static function getBachSynchoPath(): string
-    {
-
-        self::checkContainerIsOk();
-        return self::$container->getParameter('gsynchro.batchSynchro');
+        return self::getContainer()->getParameter('gsynchro.logsPath');
     }
 
     public static function getModule(): \griivsynchroengine
@@ -73,19 +60,21 @@ class SynchroHelper
         return \Module::getInstanceByName('griivsynchroengine');
     }
 
-    private static function checkContainerIsOk()
+    private static function getContainer()
     {
         if (!self::$container instanceof ContainerInterface) {
-            $kernel = \griivsynchroengine::getKernel();
-            self::$container = $kernel->getContainer();
+            #self::$container = \PrestaShop\PrestaShop\Adapter\SymfonyContainer::getInstance();
+            self::$container = \PrestaShop\PrestaShop\Adapter\ContainerBuilder::getContainer('front', _PS_MODE_DEV_);
         }
+
+        return self::$container;
     }
 
     /**
      * Convert an array into a stdClass()
-     * 
+     *
      * @param   array   $array  The array we want to convert
-     * 
+     *
      * @return  object
      */
     public static function arrayToObject($array)
@@ -102,9 +91,9 @@ class SynchroHelper
 
     /**
      * Convert a object to an array
-     * 
+     *
      * @param   object  $object The object we want to convert
-     * 
+     *
      * @return  array
      */
     public static function objectToArray($object)
@@ -149,8 +138,12 @@ class SynchroHelper
 
     public static function getLockDirectory()
     {
-        self::checkContainerIsOk();
-        return self::$container->getParameter('gsynchro.lockPath');
+        return self::getContainer()->getParameter('gsynchro.lockPath');
+    }
+
+    public static function notificcationIsEnabled()
+    {
+        return (bool)self::getContainer()->getParameter('gsynchro.enableNotification');
     }
 
 }

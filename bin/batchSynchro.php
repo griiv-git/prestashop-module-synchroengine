@@ -56,10 +56,9 @@ if (is_null($class)) {
                 $status = STATUS_BREAK;
                 $message = $e->getMessage();
                 $stack = $e->getTraceAsString();
-
             }
         } else {
-            $message = $class . " is not zsynchro_ExecutableBase";
+            $message = $class . " is not ExecutableBase";
             $status = STATUS_BREAK;
         }
     } else {

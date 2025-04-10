@@ -12,8 +12,6 @@
 namespace Griiv\SynchroEngine\Core\Notifier\Message;
 
 use Griiv\SynchroEngine\Core\Notifier\Notification\Notification;
-use Griiv\SynchroEngine\Core\Notifier\Notifier\Message\MessageInterface;
-use Griiv\SynchroEngine\Core\Notifier\Notifier\Message\MessageOptionsInterface;
 use Griiv\SynchroEngine\Core\Notifier\Recipient\Recipient;
 
 final class ChatMessage implements MessageInterface

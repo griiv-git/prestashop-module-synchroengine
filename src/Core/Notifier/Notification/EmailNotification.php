@@ -7,9 +7,7 @@ use Griiv\SynchroEngine\Core\Notifier\Message\EmailMessage;
 use Griiv\SynchroEngine\Core\Notifier\Recipient\Recipient;
 use Swift_Mailer;
 use Swift_Message;
-
 use Swift_SmtpTransport;
-use Symfony\Component\ErrorHandler\Exception\FlattenException;
 
 class EmailNotification extends Notification
 {

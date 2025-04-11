@@ -14,6 +14,7 @@ use Griiv\SynchroEngine\Core\DataSource\AbstractDataSource;
 use Griiv\SynchroEngine\Core\DataSource\DataSourceInterface;
 use Griiv\SynchroEngine\Core\Helpers\SynchroHelper;
 use Griiv\SynchroEngine\Core\Item\ItemDefinition;
+use Griiv\SynchroEngine\Core\Notifier\Notification\ChatNotification;
 use Griiv\SynchroEngine\Core\Notifier\Notification\EmailNotification;
 use Griiv\SynchroEngine\Exception\BreakException;
 use Griiv\SynchroEngine\Core\Item;
@@ -185,7 +186,7 @@ abstract class SynchroBase extends ExecutableBase
                 $this->currentRow
             ));
 
-            if (SynchroHelper::notificcationIsEnabled()) {
+            if (SynchroHelper::notificcationEmailIsEnabled()) {
                 //Notify with email
                 $notif = EmailNotification::fromThrowable(new BreakException(
                     sprintf(
@@ -193,7 +194,8 @@ abstract class SynchroBase extends ExecutableBase
                         get_class($this),
                         123,
                         $this->currentRow
-                    )));
+                    ))
+                );
 
                 if (isset($resultData['message'])) {
                     $notif->content($resultData['message'] . PHP_EOL . PHP_EOL . $notif->getContent());
@@ -205,6 +207,32 @@ abstract class SynchroBase extends ExecutableBase
                 foreach (explode(',', $emails) as $email) {
                     $notif->notify(new Notifier\Recipient\Recipient($email));
                 }
+            }
+
+            if (SynchroHelper::notificationKchatIsEnabled()) {
+                $exception = new BreakException(
+                    sprintf(
+                        "Chunk process %s with PID %s (%s)is stopped",
+                        get_class($this),
+                        123,
+                        $this->currentRow
+                    ));
+                $kchatApi = new \Griiv\SynchroEngine\Core\Api\KchatApi(
+                    getenv('GRIIVSYNCHRO_KCHAT_TOKEN'),
+                    getenv('GRIIVSYNCHRO_KCHAT_URL'),
+                    '/api/v4/posts'
+                );
+                $notif = new \Griiv\SynchroEngine\Core\Notifier\Notification\ChatNotification($kchatApi);
+
+                $notif->content($notif->computeExceptionAsString($exception));
+
+
+                if (isset($resultData['message'])) {
+                    $notif->content("**" . $resultData['message'] . "**" . PHP_EOL . PHP_EOL . $notif->getContent());
+                }
+
+                $notif->importanceFromLogLevelName('critical');
+                $notif->notify(null);
             }
 
             //Throw exception to stop synchro

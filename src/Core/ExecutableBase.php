@@ -190,6 +190,7 @@ abstract class ExecutableBase
                     $this->getLogger()->error($buffer);
                     //throw new \Exception(var_export($buffer, true));
                     $result['status'] = "BREAK";
+                    $result['message'] = $buffer;
                 }
 
 

@@ -13,5 +13,5 @@ namespace Griiv\SynchroEngine\Core;
 
 abstract class ImportBase extends SynchroBase
 {
-    protected $moduleName = 'griivsynchroengine';
+
 }

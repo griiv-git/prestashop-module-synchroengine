@@ -317,6 +317,4 @@ abstract class SynchroBase extends ExecutableBase
 
     abstract protected function initDataSources();
     abstract protected function initItemDefinition();
-
-
 }

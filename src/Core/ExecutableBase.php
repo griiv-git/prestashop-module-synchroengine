@@ -26,6 +26,11 @@ abstract class ExecutableBase
     protected $throwExceptionOnError = false;
 
     /**
+     * @var string
+     */
+    protected $moduleName = 'griivsynchroengine';
+
+    /**
      * @var array
      */
     protected $globalParameters = array();
@@ -232,4 +237,15 @@ abstract class ExecutableBase
 
     abstract protected function run();
     abstract protected function initLogger();
+
+    public function getModuleName(): string
+    {
+        return $this->moduleName;
+    }
+
+    public function setModuleName(string $moduleName): self
+    {
+        $this->moduleName = $moduleName;
+        return $this;
+    }
 }

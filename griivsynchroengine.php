@@ -23,7 +23,7 @@ class griivsynchroengine extends Module
 
         parent::__construct();
 
-        $this->displayName = $this->trans('Griiv Synchro', [], self::getTranslationDomain());
+        $this->displayName = $this->trans('Griiv - Synchro Engine', [], self::getTranslationDomain());
         $this->description = $this->trans('Set of command and codes to create imports and exports', [], self::getTranslationDomain());
         $this->ps_versions_compliancy = [
             'min' => '1.7.5.0',

@@ -12,6 +12,7 @@ namespace Griiv\SynchroEngine\Command;
 
 ini_set('memory_limit', '-1');
 
+use Griiv\SynchroEngine\Core\ExecutableBase;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -72,7 +73,9 @@ final class ExecuteCommand extends Command
 
             if (class_exists($fullClassName)) {
                 $this->io->success('Running executable class ' . $fullClassName);
+                /** @var ExecutableBase $executable */
                 $executable = new $fullClassName();
+                $executable->setModuleName($module);
 
                 $executable->execute();
 

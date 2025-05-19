@@ -193,11 +193,9 @@ abstract class ExecutableBase
 
                 if (json_last_error() !== JSON_ERROR_NONE) {
                     $this->getLogger()->error($buffer);
-                    //throw new \Exception(var_export($buffer, true));
                     $result['status'] = "BREAK";
                     $result['message'] = $buffer;
                 }
-
 
                 $result['timeBegin'] = $begin;
                 $result['timeEnd'] = $end;

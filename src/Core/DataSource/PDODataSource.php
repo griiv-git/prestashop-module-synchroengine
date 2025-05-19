@@ -38,7 +38,7 @@ class PDODataSource extends AbstractDataSource implements PDODataSourceInterface
     public function getChunkedCollection(int $offset, int $chunkSize)
     {
         $sql = $this->getSql();
-        $sql .= "LIMIT $offset, $chunkSize";
+        $sql .= " LIMIT $offset, $chunkSize";
 
         $pdo = \DbPDO::getInstance()->connect();
         $statement = $pdo->prepare($sql);

@@ -90,6 +90,6 @@ Il est également possible pour chaque import de surcharger les méthodes suivan
 1. [ ] Mise en place Validateur pour ItemProperty
 2. [ ] Mise en place des séquences 
 3. [ ] Mise en place logrotate fichier de logs
-4. [ ] Mise en place backup file gzip après import (pour les fichiers)
+4. [x] Mise en place backup file gzip après import (pour les fichiers)
 5. [ ] Rajouter des hooks pour Prestashop
 6. [ ] Mise en place rotate pour les fichiers dans.backup

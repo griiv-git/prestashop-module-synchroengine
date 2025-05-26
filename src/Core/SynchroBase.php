@@ -185,7 +185,6 @@ abstract class SynchroBase extends ExecutableBase
                 123,
                 $this->currentRow
             ));
-
             $this->getLogger()->critical($resultData['message']);
             $this->getLogger()->critical($resultData['stack']);
 

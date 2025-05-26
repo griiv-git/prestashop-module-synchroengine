@@ -46,7 +46,9 @@ abstract class SequenceBase extends ExecutableBase
      */
     protected function getLockFileName()
     {
-        return get_class($this) . ".lock";
+        $ref = new \ReflectionClass($this);
+        $shortName = $ref->getShortName();
+        return $shortName . ".lock";
     }
 
     /**
@@ -54,7 +56,9 @@ abstract class SequenceBase extends ExecutableBase
      */
     protected function getRunningFileName()
     {
-        return get_class($this) . ".run";
+        $ref = new \ReflectionClass($this);
+        $shortName = $ref->getShortName();
+        return $shortName . ".run";
     }
 
     /**
@@ -117,7 +121,7 @@ abstract class SequenceBase extends ExecutableBase
                 $this->getLogger()->notice("Sequence " . get_class($this) . " is already running.", array('code' => 403));
                 return $this->onRunning();
             case self::LOCKED:
-                $this->getLogger()->err("Sequence " . get_class($this) . " is locked. Use zsynchro.unlock-sequence " . get_class($this) . " to unlock it.", array('code' => 403));
+                $this->getLogger()->err("Sequence " . get_class($this) . " is locked. Use gsynchro.unlock-sequence " . get_class($this) . " to unlock it.", array('code' => 403));
                 return $this->onLocked();
             case self::DEAD:
                 $this->getLogger()->err("Sequence " . get_class($this) . " is dead.", array('code' => 403));
@@ -139,7 +143,7 @@ abstract class SequenceBase extends ExecutableBase
                 'globalParameters' => $this->getGlobalParameters(),
                 'currentRow' => $index,
                 'methodParameters' => array(get_class($sync), $sync->getGlobalParameters(), $sync->getThrowExceptionOnError()),
-                'module' => SynchroHelper::getModule(),
+                'moduleName' => $this->moduleName,
             );
 
             $process = $this->execSubprocess($this->getBatchPath(), $arguments);

@@ -94,16 +94,17 @@ final class ExecuteCommand extends Command
 
     private function getTypeExecutable(string $className)
     {
+
+        if (strpos($className, 'Sequence')) {
+            return 'Sequence';
+        }
+
         if (strpos($className, 'Import')) {
             return 'Import';
         }
 
         if (strpos($className, 'Export')) {
             return 'Export';
-        }
-
-        if (strpos($className, 'Sequence')) {
-            return 'Sequence';
         }
     }
 

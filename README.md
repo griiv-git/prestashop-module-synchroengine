@@ -93,3 +93,4 @@ Il est également possible pour chaque import de surcharger les méthodes suivan
 4. [x] Mise en place backup file gzip après import (pour les fichiers)
 5. [ ] Rajouter des hooks pour Prestashop
 6. [ ] Mise en place rotate pour les fichiers dans.backup
+7. [ ] Ajouter database doctrine ORM 

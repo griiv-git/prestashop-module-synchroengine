@@ -177,7 +177,6 @@ abstract class ExecutableBase
         $cmd = $phpBinaryPath . ' ' . $batchPath . ' "' . $tmpFilePath . '"';
 
         $process = Process::fromShellCommandline($cmd);
-        //$process = new Process($cmd);
 
         $that = $this;
         $process->start(function($type, $buffer) use ($that, $begin, $process, $beginDate) {

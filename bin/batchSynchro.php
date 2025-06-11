@@ -18,6 +18,7 @@ define("STATUS_END", "END");
 ini_set('mysql.connect_timeout', 28800);
 ini_set('default_socket_timeout', 28800);
 
+$oriargv = $argv;
 $argv = unserialize(file_get_contents($argv[1]));
 $arguments = $argv[0];
 
@@ -27,13 +28,15 @@ $module = $arguments['moduleName'];
 
 if ($module) {
     require_once _PS_MODULE_DIR_ . $module . '/vendor/autoload.php';
+    //on déserialise les arguments a nouveau après avoir charger les classes du module, pour avoir une désérialisation correcte des objets
+    $argv = unserialize(file_get_contents($oriargv[1]));
+    $arguments = $argv[0];
 }
 
 $globalParameters = isset($arguments['globalParameters']) ? $arguments['globalParameters'] : array();
 
 // Make method parameters array
 $methodParameters = isset($arguments['methodParameters']) ? $arguments['methodParameters'] : array();
-
 
 $status = STATUS_END;
 $data = [];

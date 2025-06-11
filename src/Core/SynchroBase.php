@@ -145,6 +145,13 @@ abstract class SynchroBase extends ExecutableBase
 
                     $process = $this->execSubprocess($this->getBatchPath(), $arguments);
 
+                    //while process is running wait for it to finish
+                    //Uncomment to debug
+                    /*while ($process->isRunning()) {
+                        usleep(100000);
+                    }*/
+
+
                     $processes[] = $process;
 
                     $this->currentRow += $this->chunkSize;

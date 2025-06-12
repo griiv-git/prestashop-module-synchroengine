@@ -53,11 +53,11 @@ class DataSourceHelper
                 $callback = null;
                 break;
             case 'plain':
-                $callback = ["Griiv\SynchroEngine\Synchro\Helpers\DataSourceHelper", "backupFileDataSource"];
+                $callback = [\Griiv\SynchroEngine\Core\Helpers\DataSourceHelper::class, "backupFileDataSource"];
                 break;
             case 'gzip':
             default:
-                $callback = ["Griiv\SynchroEngine\Synchro\Helpers\DataSourceHelper", "backupFileGzippedDataSource"];
+                $callback = [\Griiv\SynchroEngine\Core\Helpers\DataSourceHelper::class, "backupFileGzippedDataSource"];
         }
 
         // Make datasources array

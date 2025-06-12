@@ -40,6 +40,7 @@ abstract class ExecutableBase
         $logger = $this->initLogger();
 
         $this->setLogger($logger);
+        $this->setGlobalParameters($globalParameters);
     }
 
     public function __destruct()

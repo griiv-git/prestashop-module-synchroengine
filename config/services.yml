@@ -35,6 +35,10 @@ services:
         class: Griiv\SynchroEngine\Command\ExecuteCommand
         tags: [ console.command ]
 
+    griiv.synchro.console.log.rotate.command:
+        class: Griiv\SynchroEngine\Command\LogRotateCommand
+        tags: [ console.command ]
+
 
     #services
 

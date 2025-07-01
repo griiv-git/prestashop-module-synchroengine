@@ -16,6 +16,7 @@ La librairie `symfony/process` est utilisé pour faire cette parallélisation.
 * `gsynchro:add-sequence` : Créer une séquence
 * `gsynchro:create-ftp-folders` : Crée la structure des dossiers pour le ftp
 * `gsynchro:execute` : Lancer un import, un export ou une séquence
+* `gsynchro:log-rotate` : Compresser les logs dépassant 100Mo
 
 Utilisation pour la crontab notamment `php bin/console gsynchro:execute MonImport`
 

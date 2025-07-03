@@ -28,6 +28,42 @@ Utilisation pour la crontab notamment `php bin/console gsynchro:execute MonImpor
 * `gsynchro.exportBackup` : Chemin du ftp ou sont sauvegardés les fichiers exportés
 * `gsynchro.logsPath` : Chemin du dossier qui contient les logs
 * `gsynchro.batchSynchro` : Chemin de l'executable PHP pour les sous tâches
+* `gsynchro.importPathFixtures` : Chemin du dossier contenant les jeux de données de test (fixtures)
+* `gsynchro.lockPath` : Chemin du dossier des fichiers de verrouillage pour éviter les exécutions concurrentes
+* `gsynchro.enableEmailNotification` : Activer les notifications par e‑mail (mettre `1` pour activer)
+* `gsynchro.enableKchatNotification` : Activer les notifications via Kchat (mettre `1` pour activer)
+
+
+## Variables d'environnement `.env`
+
+Un fichier `.env` est fourni à la racine du module pour personnaliser les
+chemins utilisés par l'application et configurer les notifications. Les
+principales variables sont&nbsp;:
+
+- `GRIIVSYNCHRO_SMTP_HOST` et `GRIIVSYNCHRO_SMTP_PORT` : paramètres du serveur
+  SMTP pour l'envoi d'e‑mails.
+- `GRIIVSYNCHRO_SMTP_EMAIL` et `GRIIVSYNCHRO_SMTP_PWD` : identifiants de
+  connexion au serveur SMTP.
+- `GRIIVSYNCHRO_RECIPIENTS_NOTIF` : liste des adresses e‑mail séparées par des
+  virgules qui recevront les notifications.
+- `GRIIVSYNCHRO_KCHAT_TOKEN` et `GRIIVSYNCHRO_KCHAT_CHANNEL_ID` : informations
+  nécessaires pour publier des messages sur Kchat.
+- `GRIIVSYNCHRO_IMPORT_PATH` : dossier où sont récupérés les fichiers à
+  importer.
+- `GRIIVSYNCHRO_IMPORT_PATH_FIXTURES` : emplacement des jeux de données de test
+  (fixtures).
+- `GRIIVSYNCHRO_IMPORT_BACKUP` : répertoire de sauvegarde des fichiers importés.
+- `GRIIVSYNCHRO_EXPORT_PATH` : emplacement où sont générés les exports.
+- `GRIIVSYNCHRO_EXPORT_BACKUP` : dossier de sauvegarde des exports générés.
+- `GRIIVSYNCHRO_LOGS_PATH` : répertoire contenant les fichiers de log du moteur.
+- `GRIIVSYNCHRO_BATCH_SYNCHRO` : chemin vers l'exécutable PHP utilisé pour les
+  sous‑processus.
+- `GRIIVSYNCHRO_LOCK_PATH` : dossier des fichiers de verrouillage pour éviter les
+  exécutions concurrentes.
+- `GRIIVSYNCHRO_ENABLE_EMAIL_NOTIFICATION` : mettre `1` pour activer les alertes
+  par e‑mail.
+- `GRIIVSYNCHRO_ENABLE_KCHAT_NOTIFICATION` : mettre `1` pour activer les
+  notifications via Kchat.
 
 ## Créer un Import
 
@@ -176,3 +212,7 @@ compressés grâce à la commande `gsynchro:log-rotate`.
 7. [ ] Ajouter Datasource database doctrine ORM 
 8. [x] Mise en place service tagé pour identifier les synchros
 9. [ ] Mise en place dispatcher d'évènement Symfony
+10. [ ] Mettre parameterBag pour les globalparameters
+11. [ ] En mode cli ajout d'un mode debug
+12. [ ] En mode cli sur la commande `gsynchro:execute` ajouter un paramètre pour avoir une progessbar
+13. [ ] Tester avec un gros fichier +1M de ligne

@@ -192,8 +192,13 @@ abstract class SynchroBase extends ExecutableBase
                 123,
                 $this->currentRow
             ));
-            $this->getLogger()->critical($resultData['message']);
-            $this->getLogger()->critical($resultData['stack']);
+            if (isset($resultData['message'])) {
+                $this->getLogger()->critical($resultData['message']);
+            }
+
+            if (isset($resultData['stack'])) {
+                $this->getLogger()->critical($resultData['stack']);
+            }
 
             if (SynchroHelper::notificcationEmailIsEnabled()) {
                 //Notify with email

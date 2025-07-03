@@ -1,14 +1,14 @@
 parameters:
-    gsynchro.importPath: "%kernel.project_dir%/ftp/import"
-    gsynchro.importPathFixtures: "%kernel.project_dir%/modules/griivsynchroengine/fixtures/import"
-    gsynchro.importBackup: "%kernel.project_dir%/ftp/import/.backup"
-    gsynchro.exportPath: "%kernel.project_dir%/ftp/export"
-    gsynchro.exportBackup: "%kernel.project_dir%/ftp/export/.backup"
-    gsynchro.logsPath: "%kernel.project_dir%/modules/griivsynchroengine/logs"
-    gsynchro.batchSynchro: "%kernel.project_dir%/modules/griivsynchroengine/bin/batchSynchro.php"
-    gsynchro.lockPath: "%kernel.project_dir%/ftp/lock"
-    gsynchro.enableEmailNotification: false
-    gsynchro.enableKchatNotification: false
+    gsynchro.importPath: '%env(resolve:GRIIVSYNCHRO_IMPORT_PATH)%'
+    gsynchro.importPathFixtures: '%env(resolve:GRIIVSYNCHRO_IMPORT_PATH_FIXTURES)%'
+    gsynchro.importBackup: '%env(resolve:GRIIVSYNCHRO_IMPORT_BACKUP)%'
+    gsynchro.exportPath: '%env(resolve:GRIIVSYNCHRO_EXPORT_PATH)%'
+    gsynchro.exportBackup: '%env(resolve:GRIIVSYNCHRO_EXPORT_BACKUP)%'
+    gsynchro.logsPath: '%env(resolve:GRIIVSYNCHRO_LOGS_PATH)%'
+    gsynchro.batchSynchro: '%env(resolve:GRIIVSYNCHRO_BATCH_SYNCHRO)%'
+    gsynchro.lockPath: '%env(resolve:GRIIVSYNCHRO_LOCK_PATH)%'
+    gsynchro.enableEmailNotification: '%env(resolve:GRIIVSYNCHRO_ENABLE_EMAIL_NOTIFICATION)%'
+    gsynchro.enableKchatNotification: '%env(resolve:GRIIVSYNCHRO_ENABLE_KCHAT_NOTIFICATION)%'
 
 services:
     _defaults:
@@ -33,12 +33,13 @@ services:
 
     griiv.synchro.console.execute.command:
         class: Griiv\SynchroEngine\Command\ExecuteCommand
+        arguments:
+            - !tagged_iterator 'gsynchro.synchro'
         tags: [ console.command ]
 
     griiv.synchro.console.log.rotate.command:
         class: Griiv\SynchroEngine\Command\LogRotateCommand
         tags: [ console.command ]
-
 
     #services
 

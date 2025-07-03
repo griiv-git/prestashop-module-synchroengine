@@ -80,7 +80,7 @@ final class LogRotateCommand extends Command
             return;
         }
 
-        $threshold = 100 * 1024 * 1024; // 100 MB
+        $threshold = 10 * 1024 * 1024; // 10 MB
         if (filesize($filePath) < $threshold) {
             return;
         }

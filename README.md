@@ -3,7 +3,7 @@
 
 Le module de synchro Griiv est utilisé pour créer des flux d'import, export via des fichiers CSV, fichier texte, API Prestashop, BDD, API REST, etc...
 
-Il permet également de traiter de gros volumes de données avec une parallélisation de plusieurs sous tâche pour traiter les données entrantes. 
+Il permet également de traiter de gros volumes de données avec une parallélisation de plusieurs sous tâche pour traiter les données entrantes.
 
 Par exemple un fichier CSV de 1 000 000 peut être traité via 100 sous taĉhes lancées en parallèle qui traite chacune 10 000 entrées de la source de donnée entrante
 
@@ -89,9 +89,11 @@ Il est également possible pour chaque import de surcharger les méthodes suivan
 ## TODO
 
 1. [ ] Mise en place Validateur pour ItemProperty
-2. [ ] Mise en place des séquences 
-3. [ ] Mise en place logrotate fichier de logs
+2. [x] Mise en place des séquences
+3. [x] Mise en place logrotate fichier de logs
 4. [x] Mise en place backup file gzip après import (pour les fichiers)
 5. [ ] Rajouter des hooks pour Prestashop
 6. [ ] Mise en place rotate pour les fichiers dans.backup
-7. [ ] Ajouter database doctrine ORM 
+7. [ ] Ajouter Datasource database doctrine ORM 
+8. [x] Mise en place service tagé pour identifier les synchros
+9. [ ] Mise en place dispatcher d'évènement Symfony

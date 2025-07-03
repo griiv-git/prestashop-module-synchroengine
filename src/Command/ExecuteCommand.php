@@ -24,21 +24,9 @@ use Symfony\Component\Finder\Finder;
 final class ExecuteCommand extends Command
 {
 
-    /**
-     * @var Filesystem
-     */
-    private $fs;
-
-    /**
-     * @var Finder
-     */
-    private $finder;
-
-    public function __construct($name = null)
+    public function __construct(private iterable $synchros, $name = null)
     {
         parent::__construct($name);
-        $this->fs = new Filesystem();
-        $this->finder = new Finder();
     }
     /**
      * {@inheritdoc}
@@ -48,9 +36,8 @@ final class ExecuteCommand extends Command
         $this
             ->setName('gsynchro:execute')
             ->setDescription('Run an import, export or sequence')
-            ->addArgument('module_name', InputArgument::REQUIRED, 'Module to where is the class')
             ->addArgument('class_name', InputArgument::REQUIRED, 'Executable class to run')
-            ->setHelp('Help test');
+            ->setHelp('');
     }
 
     /**
@@ -61,66 +48,32 @@ final class ExecuteCommand extends Command
 
         $this->io = new SymfonyStyle($input, $output);
         $classNameToExecute = $input->getArgument('class_name');
-        $module = $input->getArgument('module_name');
 
-        $type = $this->getTypeExecutable($classNameToExecute);
+        $serviceFound = null;
 
-        if (file_exists('modules/' . $module . '/src/Synchro/'.$type.'/' . $classNameToExecute . '.php')) {
-            //get namespace in the file class
-            $namespace = $this->getNamespaceFromFile('modules/' . $module . '/src/Synchro/'.$type.'/' . $classNameToExecute . '.php');
-
-            $fullClassName = $namespace . "\\" .  $classNameToExecute;
-
-            if (class_exists($fullClassName)) {
-                $this->io->success('Running executable class ' . $fullClassName);
-                /** @var ExecutableBase $executable */
-                $executable = new $fullClassName();
-                $executable->setModuleName($module);
-
-                $executable->execute();
-
-            } else {
-                $this->io->warning('class ' . $classNameToExecute . ' not exist');
+        foreach ($this->synchros as $service) {
+            if (!$service instanceof ExecutableBase) {
+                continue;
             }
 
+            $class = get_class($service);
+            $shortName = substr($class, strrpos($class, '\\') + 1);
 
-        } else {
-            $this->io->warning('File not exist');
+            if ($shortName === $classNameToExecute) {
+                $serviceFound = $service;
+                break;
+            }
         }
 
+        if (null === $serviceFound) {
+            $this->io->warning('class ' . $classNameToExecute . ' not exist');
+            return 0;
+        }
+
+        $this->io->success('Running executable class ' . get_class($serviceFound));
+
+        $serviceFound->execute();
 
         return 0;
-    }
-
-    private function getTypeExecutable(string $className)
-    {
-
-        if (strpos($className, 'Sequence')) {
-            return 'Sequence';
-        }
-
-        if (strpos($className, 'Import')) {
-            return 'Import';
-        }
-
-        if (strpos($className, 'Export')) {
-            return 'Export';
-        }
-    }
-
-    private function getNamespaceFromFile($filePath) {
-        // Lire le contenu du fichier
-        $fileContent = file_get_contents($filePath);
-        if ($fileContent === false) {
-            return null;
-        }
-
-        // Utiliser une expression régulière pour trouver le namespace
-        $namespacePattern = '/namespace\s+([a-zA-Z0-9_\\\\]+)\s*;/';
-        if (preg_match($namespacePattern, $fileContent, $matches)) {
-            return $matches[1];
-        }
-
-        return null;
     }
 }

@@ -63,7 +63,6 @@ class SynchroHelper
     private static function getContainer()
     {
         if (!self::$container instanceof ContainerInterface) {
-            #self::$container = \PrestaShop\PrestaShop\Adapter\SymfonyContainer::getInstance();
             self::$container = \PrestaShop\PrestaShop\Adapter\ContainerBuilder::getContainer('front', _PS_MODE_DEV_);
         }
 

@@ -76,7 +76,15 @@ Il est également possible pour chaque import de surcharger les méthodes suivan
 
 `initLogger()` : permet d'initialiser un logger pour l'import. De base un fichier de log est pour chaque import voir ```SynchroBase::initLogger()```
 
+### Créer le service associé à l'import
 
+Pour que l'import soit reconnu par le système, il faut créer un service dans le fichier `services.yml` de votre module :
+
+```yaml  
+  griiv.synchro.import.customer_import:
+    class: Griiv\Synchro\Synchro\Import\CustomerImport
+    tags: [ gsynchro.synchro ]
+```
 
 ## Créer un Export
 

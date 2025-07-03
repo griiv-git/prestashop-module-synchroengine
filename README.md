@@ -88,11 +88,82 @@ Pour que l'import soit reconnu par le système, il faut créer un service dans l
 
 ## Créer un Export
 
-## Les DataSources
+Pour générer la classe d'export il suffit d'exécuter la commande suivante&nbsp;:
 
-## Les DataTargets
+```bash
+php bin/console gsynchro:add-export gsynchro NomDeMonExport
+```
 
-## Sous le capot
+Un fichier `NomDeMonExportExport.php` est alors créé dans le dossier
+`_PS_ROOT_DIR_/modules/griivsynchroengine/src/Synchro/Export/` de votre
+module. Pensez à lancer `composer dumpautoload` après la création pour que
+l'autoload soit mis à jour.
+
+Le squelette généré ressemble à ceci&nbsp;:
+
+```php
+namespace Griiv\SynchroEngine\Synchro\Export;
+
+use Griiv\SynchroEngine\Core\ExportBase;
+
+class NomDeMonExportExport extends ExportBase
+{
+    protected function initDataTargets()
+    {
+        // Définir les cibles de données (fichier, API, ...)
+    }
+
+    protected function initTargetItemDefinition()
+    {
+        // Structure des données attendues par la cible
+    }
+
+    protected function initDataSources()
+    {
+        // Sources à exporter (BDD, API, ...)
+    }
+
+    protected function initItemDefinition()
+    {
+        // Définition des données issues de la source
+    }
+
+    protected function processRow($dataArray)
+    {
+        return parent::processRow($dataArray);
+    }
+}
+```
+
+### Les DataSources
+
+Une **DataSource** décrit la manière de lire les données en entrée. Plusieurs
+implémentations sont fournies dans `src/Core/DataSource`&nbsp;:
+
+- `FileDataSource` pour lire des fichiers CSV ou texte ;
+- `GlobDataSource` afin de traiter un ensemble de fichiers correspondant à un
+  motif&nbsp;(`glob`) ;
+- `DbQueryDataSource` et `PDODataSource` pour récupérer des données en base ;
+- `PrestashopApiDataSource` ou `AkeneoApiRestDataSource` pour des appels API ;
+- `BufferDataSource` lorsque les données sont déjà en mémoire.
+
+### Les DataTargets
+
+Une **DataTarget** représente la destination des données lors d'un export.
+Quelques classes sont disponibles dans `src/Core/DataTarget`&nbsp;:
+
+- `FileDataTarget` et `PlainFileDataTarget` pour écrire dans des fichiers ;
+- `ApiRestDataTarget` pour envoyer les informations vers une API REST ;
+- `PDODataTarget` pour insérer ou mettre à jour des lignes en base.
+
+### Sous le capot
+
+Le moteur s'appuie sur `symfony/process` pour paralléliser les traitements.
+Chaque lot de données est exécuté dans un sous‑processus via le script
+`bin/batchSynchro.php`. Les logs sont gérés par *Monolog* et stockés dans le
+répertoire défini par le paramètre `gsynchro.logsPath`. Les fichiers sources
+peuvent être archivés automatiquement après traitement et les logs sont
+compressés grâce à la commande `gsynchro:log-rotate`.
 
 ## TODO
 

@@ -212,7 +212,7 @@ compressés grâce à la commande `gsynchro:log-rotate`.
 7. [ ] Ajouter Datasource database doctrine ORM 
 8. [x] Mise en place service tagé pour identifier les synchros
 9. [ ] Mise en place dispatcher d'évènement Symfony
-10. [ ] Mettre parameterBag pour les globalparameters
+10. [x] Mettre parameterBag pour les globalparameters
 11. [ ] En mode cli ajout d'un mode debug
 12. [ ] En mode cli sur la commande `gsynchro:execute` ajouter un paramètre pour avoir une progessbar
 13. [ ] Tester avec un gros fichier +1M de ligne

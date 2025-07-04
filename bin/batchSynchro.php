@@ -11,6 +11,8 @@
 require_once __DIR__ . '/../../../config/config.inc.php';
 require_once __DIR__ .'/../vendor/autoload.php';
 
+use Symfony\Component\HttpFoundation\ParameterBag;
+
 define("STATUS_OK", "OK");
 define("STATUS_BREAK", "BREAK");
 define("STATUS_END", "END");
@@ -33,7 +35,12 @@ if ($module) {
     $arguments = $argv[0];
 }
 
-$globalParameters = isset($arguments['globalParameters']) ? $arguments['globalParameters'] : array();
+$globalParameters = $arguments['globalParameters'] ?? new ParameterBag();
+if (is_array($globalParameters)) {
+    $globalParameters = new ParameterBag($globalParameters);
+} elseif (!$globalParameters instanceof ParameterBag) {
+    $globalParameters = new ParameterBag();
+}
 
 // Make method parameters array
 $methodParameters = isset($arguments['methodParameters']) ? $arguments['methodParameters'] : array();

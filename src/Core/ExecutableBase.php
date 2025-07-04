@@ -15,6 +15,7 @@ use PrestaShop\PrestaShop\Core\Util\DateTime\DateTime;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Process\PhpExecutableFinder;
 use Symfony\Component\Process\Process;
+use Symfony\Component\HttpFoundation\ParameterBag;
 
 abstract class ExecutableBase
 {
@@ -31,16 +32,16 @@ abstract class ExecutableBase
     protected $moduleName = 'griivsynchroengine';
 
     /**
-     * @var array
+     * @var ParameterBag
      */
-    protected $globalParameters = array();
+    protected ParameterBag $globalParameters;
 
-    public function __construct(array $globalParameters = [])
+    public function __construct(ParameterBag $globalParameters = null)
     {
         $logger = $this->initLogger();
 
         $this->setLogger($logger);
-        $this->setGlobalParameters($globalParameters);
+        $this->setGlobalParameters($globalParameters ?? new ParameterBag());
     }
 
     public function __destruct()
@@ -75,7 +76,7 @@ abstract class ExecutableBase
         }
     }
 
-    public function getGlobalParameters(): array
+    public function getGlobalParameters(): ParameterBag
     {
         return $this->globalParameters;
     }
@@ -86,15 +87,15 @@ abstract class ExecutableBase
      */
     public function getGlobalParameter($parameterName)
     {
-        return $this->globalParameters[$parameterName] ?? null;
+        return $this->globalParameters->get($parameterName);
     }
 
     public function addGlobalParameter($key, $value): void
     {
-        $this->globalParameters[$key] = $value;
+        $this->globalParameters->set($key, $value);
     }
 
-    public function setGlobalParameters(array $parameters): void
+    public function setGlobalParameters(ParameterBag $parameters): void
     {
         $this->globalParameters = $parameters;
     }

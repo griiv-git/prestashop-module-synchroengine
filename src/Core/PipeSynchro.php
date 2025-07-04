@@ -13,6 +13,7 @@ namespace Griiv\SynchroEngine\Core;
 use Griiv\SynchroEngine\Core\DataTarget\DataTargetInterface;
 use Griiv\SynchroEngine\Core\Item\ItemDefinition;
 use Griiv\SynchroEngine\Core\Item;
+use Symfony\Component\HttpFoundation\ParameterBag;
 
 abstract class PipeSynchro extends SynchroBase
 {
@@ -34,7 +35,7 @@ abstract class PipeSynchro extends SynchroBase
      * This constructor will be called in main/child processes
      * @throws \Exception
      */
-    public function __construct($globalParameters = array())
+    public function __construct(ParameterBag $globalParameters = null)
     {
         parent::__construct($globalParameters);
 

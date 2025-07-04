@@ -21,6 +21,7 @@ use Griiv\SynchroEngine\Core\Item;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\ParameterBag;
 
 abstract class SynchroBase extends ExecutableBase
 {
@@ -34,7 +35,7 @@ abstract class SynchroBase extends ExecutableBase
 
     protected ItemDefinition $itemDefinition;
 
-    public function __construct($globalParameters = array())
+    public function __construct(ParameterBag $globalParameters = null)
     {
         parent::__construct($globalParameters);
 

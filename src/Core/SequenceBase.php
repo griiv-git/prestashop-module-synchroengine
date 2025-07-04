@@ -15,6 +15,7 @@ use Exception;
 use Griiv\SynchroEngine\Core\Helpers\SynchroHelper;
 use Griiv\SynchroEngine\Exception\BreakException;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\ParameterBag;
 
 abstract class SequenceBase extends ExecutableBase
 {
@@ -35,7 +36,7 @@ abstract class SequenceBase extends ExecutableBase
     private Filesystem $fs;
 
 
-    public function __construct(array $globalParameters = [])
+    public function __construct(ParameterBag $globalParameters = null)
     {
         parent::__construct($globalParameters);
         $this->fs = new Filesystem();
@@ -171,7 +172,7 @@ abstract class SequenceBase extends ExecutableBase
         $this->getLogger()->debug(var_export($resultData, true));
     }
 
-    public function subRun($syncClassName, $syncGlobalParameters, $throwExceptionOnError)
+    public function subRun($syncClassName, ParameterBag $syncGlobalParameters, $throwExceptionOnError)
     {
         if (!class_exists($syncClassName)) {
             $this->getLogger()->warn($syncClassName . " doesn't exist");

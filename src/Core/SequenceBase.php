@@ -147,21 +147,8 @@ abstract class SequenceBase extends ExecutableBase
                 'moduleName' => $this->moduleName,
             );
 
-            $process = $this->execSubprocess($this->getBatchPath(), $arguments);
-
-            $processes[] = $process;
-        }
-
-        while (count($processes) > 0) {
-            foreach ($processes as $key => $process) {
-                // Vérifier si le processus est terminé
-                if (!$process->isRunning()) {
-                    // Supprimer le processus de la liste des processus en cours
-                    unset($processes[$key]);
-                }
-            }
-            // Attendre un court instant avant de vérifier à nouveau
-            usleep(10000); // 10 millisecondes
+            // Execute each synchronization sequentially
+            $this->execSubprocess($this->getBatchPath(), $arguments, false);
         }
 
         $this->flagAsNotRunning();

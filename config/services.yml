@@ -42,8 +42,19 @@ services:
         tags: [ console.command ]
 
     #services
-
     griiv.synchro.helpers.synchrohelper:
         class: 'Griiv\SynchroEngine\Synchro\Helpers\SynchroHelper'
         arguments:
             - '@service_container'
+
+    griiv.synchro.import.sample_import:
+        class: Griiv\SynchroEngine\Synchro\Import\SampleImport
+        tags: [ gsynchro.synchro ]
+
+    griiv.synchro.export.sample_export:
+        class: Griiv\SynchroEngine\Synchro\Export\SampleImport
+        tags: [ gsynchro.synchro ]
+
+    griiv.synchro.sequence.sample_sequence:
+        class: Griiv\SynchroEngine\Synchro\Sequence\SampleImport
+        tags: [ gsynchro.synchro ]

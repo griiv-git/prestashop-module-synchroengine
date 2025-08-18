@@ -166,7 +166,7 @@ abstract class ExecutableBase
         return $this->throwExceptionOnError;
     }
 
-    public function execSubprocess($batchPath, $arguments)
+    public function execSubprocess($batchPath, $arguments, bool $async = true)
     {
         $result = ['status' => 'BREAK', 'data' => [], 'message' => ''];
 
@@ -181,7 +181,7 @@ abstract class ExecutableBase
         $process = Process::fromShellCommandline($cmd);
 
         $that = $this;
-        $process->start(function($type, $buffer) use ($that, $begin, $process, $beginDate) {
+        $callback = function($type, $buffer) use ($that, $begin, $process, $beginDate) {
             if (Process::ERR === $type) {
                 // Gérer la sortie d'erreur
                 $that->getLogger()->error($buffer);
@@ -210,7 +210,13 @@ abstract class ExecutableBase
 
                 $this->chunkCallback($result);
             }
-        });
+        };
+
+        if ($async) {
+            $process->start($callback);
+        } else {
+            $process->run($callback);
+        }
 
         return $process;
     }

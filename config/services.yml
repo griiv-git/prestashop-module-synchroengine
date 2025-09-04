@@ -37,6 +37,12 @@ services:
             - !tagged_iterator 'gsynchro.synchro'
         tags: [ console.command ]
 
+    griiv.synchro.console.list_synchro.command:
+        class: Griiv\SynchroEngine\Command\ListSynchroCommand
+        arguments:
+            - !tagged_iterator 'gsynchro.synchro'
+        tags: [ console.command ]
+
     griiv.synchro.console.log.rotate.command:
         class: Griiv\SynchroEngine\Command\LogRotateCommand
         tags: [ console.command ]
@@ -46,15 +52,3 @@ services:
         class: 'Griiv\SynchroEngine\Synchro\Helpers\SynchroHelper'
         arguments:
             - '@service_container'
-
-    griiv.synchro.import.sample_import:
-        class: Griiv\SynchroEngine\Synchro\Import\SampleImport
-        tags: [ gsynchro.synchro ]
-
-    griiv.synchro.export.sample_export:
-        class: Griiv\SynchroEngine\Synchro\Export\SampleImport
-        tags: [ gsynchro.synchro ]
-
-    griiv.synchro.sequence.sample_sequence:
-        class: Griiv\SynchroEngine\Synchro\Sequence\SampleImport
-        tags: [ gsynchro.synchro ]
